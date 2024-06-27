@@ -8,14 +8,16 @@ interface IProps {
     className?: string
 }
 
+
+
 const Banner = ({
     className,
 }: IProps) => {
-    const ref = useRef();
+    const ref = useRef<HTMLDivElement>(null);
 
 
     const downloadBanner = () => {
-        const node = document.getElementById('my-node');
+        const node = ref.current;
         if(!node){
             return;
         }
@@ -40,10 +42,10 @@ const Banner = ({
         </a>
         <DownloadButton type="button" onClick={downloadBanner}>Download Banner</DownloadButton>
 
-        <div className="banner-wrapper" id="my-node">
+        <DownloadWrapper ref={ref}>
             <img src="/logo.svg" alt={name}/>
             <h1>{name}</h1>
-        </div>
+        </DownloadWrapper>
     </BannerRoot>;
 };
 
@@ -51,8 +53,33 @@ export default Banner;
 
 
 
+const DownloadWrapper = styled.div`
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  height: 200px;
+  width: 920px;
+  gap: 12px;
+  background-color: #242424;
+  
+  > img{
+    height: 100px;
+  }
+  
+  > h1{
+    font-size: 40px;
+    color: #fff;
+    font-weight: 700;
+    line-height: 0;
+  }
+`;
+
+
 const DownloadButton = styled.button`
-    position: absolute;
+  position: absolute;
   right: 0;
 `;
 

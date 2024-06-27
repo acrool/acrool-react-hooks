@@ -5,7 +5,7 @@
 </a>
 
 <p align="center">
-    This is a toast message function for React development notifications
+    This is a commonly used React hooks toolbox, designed to facilitate rapid daily development.
 </p>
 
 <div align="center">
