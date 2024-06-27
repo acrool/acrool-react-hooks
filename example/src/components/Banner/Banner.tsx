@@ -63,7 +63,7 @@ const DownloadWrapper = styled.div`
   height: 200px;
   width: 920px;
   gap: 12px;
-  background-color: #242424;
+  background-color: #000;
   
   > img{
     height: 100px;
