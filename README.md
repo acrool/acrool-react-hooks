@@ -1,7 +1,7 @@
 # Acrool React Hooks
 
 <a href="https://acrool-react-hooks.pages.dev/" title="Acrool React Hooks - This is a toast message function for React development notifications">
-    <img src="https://raw.githubusercontent.com/acrool/acrool-react-hooks/main/og.webp" alt="Acrool React Hooks Logo"/>
+    <img src="https://raw.githubusercontent.com/acrool/acrool-react-hooks/main/example/public/og.webp" alt="Acrool React Hooks Logo"/>
 </a>
 
 <p align="center">
