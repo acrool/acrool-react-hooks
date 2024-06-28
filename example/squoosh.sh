@@ -1,7 +1,6 @@
 #!/bin/bash
 
 export NVM_DIR="$HOME/.nvm"
-# 加载 nvm 并设置 node 版本
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 
 nvm use 14;

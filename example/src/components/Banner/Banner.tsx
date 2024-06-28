@@ -10,6 +10,10 @@ interface IProps {
 
 
 
+const repositoryUrl = 'https://github.com/acrool/acrool-react-hooks';
+const name = 'Acrool React Hooks';
+
+
 const Banner = ({
     className,
 }: IProps) => {
@@ -24,16 +28,12 @@ const Banner = ({
 
         domtoimage.toPng(node, {quality: 0.95})
             .then(function (dataUrl) {
-                var link = document.createElement('a');
+                const link = document.createElement('a');
                 link.download = 'og.png';
                 link.href = dataUrl;
                 link.click();
             });
     };
-
-
-    const repositoryUrl = 'https://github.com/acrool/acrool-react-hooks';
-    const name = 'Acrool React Hooks';
 
 
     return <BannerRoot className={className}>
