@@ -5,7 +5,6 @@ import {useState} from 'react';
 
 /**
  * 光箱控制 Hook
- * (非遮罩做法)
  */
 const useModal = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -18,10 +17,15 @@ const useModal = () => {
         return setIsOpen(true);
     };
 
+    const toggleModal = () => {
+        return setIsOpen(curr => !curr);
+    };
+
     return {
         isOpen,
         openModal,
         closeModal,
+        toggleModal,
     };
 
 };
