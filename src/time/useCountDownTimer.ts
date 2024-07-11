@@ -3,6 +3,8 @@ import {useCallback, useEffect, useRef, useState} from 'react';
 
 const updateTimeMs = 1000;
 
+const millisecondToSec = (millisecond: number) => millisecond / 1000;
+
 /**
  * 倒數計時器 傳入需倒數的秒數 可重複倒數
  */
@@ -16,13 +18,13 @@ const useCountDownTimer = (isLoop = false) => {
         };
     }, []);
 
-    const start = useCallback((seconds: number, callback?: () => void ) => {
+    const start = useCallback((millisecond: number, callback?: () => void ) => {
         //檢查seconds是否大於0
-        if(seconds <= 0) {
+        if(millisecond <= 0) {
             return;
         }
 
-        setTotalSeconds(seconds);
+        setTotalSeconds(millisecondToSec(millisecond));
 
         timerRef.current = setInterval(() => {
             setTotalSeconds((sec) => {
@@ -33,7 +35,7 @@ const useCountDownTimer = (isLoop = false) => {
                     }
 
                     if (isLoop) {
-                        return seconds;
+                        return millisecondToSec(millisecond);
                     }
 
                     timerRef?.current && clearInterval(timerRef.current);

@@ -17,10 +17,10 @@ describe('useCountDownTimer 倒數計時器', () => {
         const callback = jest.fn();
         const {result} = renderHook(() => useCountDownTimer());
 
-
+        const targetSec = 10 * 1000;
         act(() => {
-            result.current.start(10, callback);
-            jest.advanceTimersByTime(10 * 1000); //等待10秒
+            result.current.start(targetSec, callback);
+            jest.advanceTimersByTime(targetSec); //等待10秒
         });
 
         expect(result.current.totalSeconds).toEqual(0);
@@ -32,9 +32,11 @@ describe('useCountDownTimer 倒數計時器', () => {
         const callback = jest.fn();
         const {result} = renderHook(() => useCountDownTimer(true));
 
+        const targetSec = 5 * 1000;
+
         act(() => {
-            result.current.start(10, callback);
-            jest.advanceTimersByTime(30 * 1000); //等待30秒
+            result.current.start(targetSec, callback);
+            jest.advanceTimersByTime(targetSec * 3); //等待30秒
 
         });
 
@@ -59,7 +61,7 @@ describe('useCountDownTimer 倒數計時器', () => {
         const {result, unmount} = renderHook(() => useCountDownTimer());
 
         act(() => {
-            result.current.start(10);
+            result.current.start(10 * 1000);
             jest.advanceTimersByTime(5 * 1000); //等待5秒
         });
 
