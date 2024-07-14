@@ -1,5 +1,3 @@
-const cwd = global.process.cwd()
-
 module.exports = {
     coverageDirectory: 'coverage',
     preset: 'ts-jest',
