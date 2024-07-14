@@ -22,8 +22,7 @@
     ".": {
       "browser": "./dist/acrool-react-hooks.es.js",
       "import": "./dist/acrool-react-hooks.es.js"
-    },
-    "./dist/index.css": "./dist/style.css"
+    }
   },
   "files": [
     "dist"
