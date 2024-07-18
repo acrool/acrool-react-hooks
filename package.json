@@ -1,6 +1,6 @@
 {
   "name": "@acrool/react-hooks",
-  "version": "0.0.4",
+  "version": "0.0.5-alpha.0",
   "description": "Hooks library based for Reactjs",
   "keywords": [
     "acrool",
