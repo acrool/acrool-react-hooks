@@ -11,14 +11,18 @@ const millisecondToSec = (millisecond: number) => millisecond / 1000;
 const useCountDownTimer = (isLoop = false) => {
     const [totalSeconds, setTotalSeconds] = useState(0);
     const timerRef = useRef<ReturnType<typeof setTimeout>>();
+    const rafRef = useRef<number>();
 
     useEffect(()=> {
         return () => {
-            timerRef?.current && clearInterval(timerRef.current);
+            if (timerRef.current) clearInterval(timerRef.current);
+            if (rafRef.current) cancelAnimationFrame(rafRef.current);
+
         };
     }, []);
 
     const start = useCallback((millisecond: number, callback?: () => void ) => {
+
         //檢查seconds是否大於0
         if(millisecond <= 0) {
             return;
@@ -30,9 +34,8 @@ const useCountDownTimer = (isLoop = false) => {
             setTotalSeconds((sec) => {
                 const formatSec = sec - 1;
                 if (formatSec <= 0) {
-                    if(callback){
-                        callback();
-                    }
+
+                    rafRef.current = requestAnimationFrame(callback);
 
                     if (isLoop) {
                         return millisecondToSec(millisecond);

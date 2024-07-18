@@ -23,6 +23,7 @@ describe('useCountDownTimer 倒數計時器', () => {
             jest.advanceTimersByTime(targetSec); //等待10秒
         });
 
+        jest.advanceTimersToNextTimer();
         expect(result.current.totalSeconds).toEqual(0);
         expect(callback).toBeCalledTimes(1);
     });
@@ -39,7 +40,7 @@ describe('useCountDownTimer 倒數計時器', () => {
             jest.advanceTimersByTime(targetSec * 3); //等待30秒
 
         });
-
+        jest.advanceTimersToNextTimer();
         expect(callback).toBeCalledTimes(3);
     });
 
