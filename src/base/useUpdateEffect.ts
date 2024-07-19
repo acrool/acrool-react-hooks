@@ -5,7 +5,7 @@ import {useEffect, useRef} from 'react';
 /**
  * 初始不更新的 Hook
  */
-const useOnlyUpdateEffect = (fn: Function, inputs: any[]) => {
+const useUpdateEffect = (fn: Function, inputs: any[]) => {
     const didMountRef = useRef(false);
     useEffect(() => {
         if(didMountRef.current) fn();
@@ -14,4 +14,4 @@ const useOnlyUpdateEffect = (fn: Function, inputs: any[]) => {
     }, inputs);
 };
 
-export default useOnlyUpdateEffect;
+export default useUpdateEffect;

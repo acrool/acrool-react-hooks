@@ -1,2 +1,2 @@
-export {default as useModal} from './useModal';
-export {default as useOnlyUpdateEffect} from './useOnlyUpdateEffect';
+export {default as useShow} from './useShow';
+export {default as useUpdateEffect} from './useUpdateEffect';

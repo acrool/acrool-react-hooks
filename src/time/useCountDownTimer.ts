@@ -5,49 +5,47 @@ const updateTimeMs = 1000;
 
 const millisecondToSec = (millisecond: number) => millisecond / 1000;
 
+type TStart = (millisecond: number) => Promise<void>
+
 /**
  * 倒數計時器 傳入需倒數的秒數 可重複倒數
  */
-const useCountDownTimer = (isLoop = false) => {
+const useCountDownTimer = () => {
     const [totalSeconds, setTotalSeconds] = useState(0);
-    const timerRef = useRef<ReturnType<typeof setTimeout>>();
-    const rafRef = useRef<number>();
+    const timerRef = useRef<ReturnType<typeof setInterval>>();
 
     useEffect(()=> {
         return () => {
             if (timerRef.current) clearInterval(timerRef.current);
-            if (rafRef.current) cancelAnimationFrame(rafRef.current);
-
         };
     }, []);
 
-    const start = useCallback((millisecond: number, callback?: () => void ) => {
+    const start: TStart = useCallback(async (millisecond: number) => {
 
-        //檢查seconds是否大於0
-        if(millisecond <= 0) {
-            return;
-        }
+        return new Promise<void>((resolve) => {
 
-        setTotalSeconds(millisecondToSec(millisecond));
+            // 檢查秒數是否大於0
+            if (millisecond <= 0) {
+                resolve();
+                return;
+            }
 
-        timerRef.current = setInterval(() => {
-            setTotalSeconds((sec) => {
-                const formatSec = sec - 1;
-                if (formatSec <= 0) {
+            setTotalSeconds(millisecondToSec(millisecond));
 
-                    rafRef.current = requestAnimationFrame(callback);
-
-                    if (isLoop) {
-                        return millisecondToSec(millisecond);
+            timerRef.current = setInterval(() => {
+                setTotalSeconds((sec) => {
+                    const formatSec = sec - 1;
+                    if (formatSec <= 0) {
+                        resolve();
+                        if (timerRef.current) clearInterval(timerRef.current);
                     }
 
-                    timerRef?.current && clearInterval(timerRef.current);
-                }
+                    return formatSec;
+                });
+            }, updateTimeMs);
 
-                return formatSec;
-            });
+        });
 
-        }, updateTimeMs);
     }, [timerRef]);
 
 
