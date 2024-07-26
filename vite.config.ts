@@ -25,7 +25,7 @@ export default defineConfig({
         },
         cssTarget: 'chrome61',
         rollupOptions: {
-            external: ['react', 'react-dom', 'dayjs'],
+            external: ['react', 'react-dom'],
             output: {
                 globals: {
                     react: 'React',
