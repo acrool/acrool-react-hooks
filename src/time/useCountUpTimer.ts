@@ -1,4 +1,4 @@
-import {useCallback, useEffect, useState} from 'react';
+import {useCallback, useEffect, useRef, useState} from 'react';
 
 
 /**
@@ -6,7 +6,7 @@ import {useCallback, useEffect, useState} from 'react';
  */
 const useCountUpTimer = () => {
     const [time, setTime] = useState<number>(0);
-    let timer: NodeJS.Timeout | null = null;
+    const timerRef = useRef<ReturnType<typeof setInterval>>();
 
     const start = useCallback((startTime: string) => {
         if (startTime) {
@@ -15,21 +15,31 @@ const useCountUpTimer = () => {
             const initialElapsedTime = currentTime - startTimeInSeconds;
             setTime(initialElapsedTime);
 
-            timer = setInterval(() => {
+            timerRef.current = setInterval(() => {
                 setTime((prevTime) => prevTime + 1);
             }, 1000);
         }
     }, []);
 
+    const stop = useCallback(() => {
+        if (timerRef.current) {
+            clearInterval(timerRef.current);
+            timerRef.current = undefined;
+        }
+    }, []);
+
     useEffect(() => {
         return () => {
-            // 無論何時，只要 useEffect 運行，我們就清除定時器
-            timer && clearInterval(timer);
+            if (timerRef.current) clearInterval(timerRef.current);
         };
     }, []);
 
 
-    return {start, time};
+    return {
+        start,
+        stop,
+        time,
+    };
 };
 
 
