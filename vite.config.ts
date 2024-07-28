@@ -1,9 +1,19 @@
 import {defineConfig} from 'vite';
 import react from '@vitejs/plugin-react-swc';
-import dts from 'vite-plugin-dts';
-import * as path from 'node:path';
 import {visualizer} from 'rollup-plugin-visualizer';
+
+import dts from 'vite-plugin-dts';
+import glob from 'fast-glob';
 import eslint from 'vite-plugin-eslint';
+
+// libraries
+const files = glob.sync(['./src/**/index.ts'])
+    .map(file => {
+        const key = file.match(/(?<=\.\/src\/).*(?=\.ts)/);
+        return [key[0], file];
+    });
+const entries = Object.fromEntries(files);
+
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -18,12 +28,12 @@ export default defineConfig({
     build: {
         minify: process.env.NODE_ENV === 'production',
         sourcemap: process.env.NODE_ENV !== 'production',
+        outDir: 'dist',
         lib: {
-            entry: path.resolve(__dirname, 'src/index.ts'),
-            formats: ['es'],
-            fileName: (format) => `acrool-react-hooks.${format}.js`,
+            entry: entries,
+            formats: ['es', 'cjs'],
+            fileName: (format,entryName) => `${entryName}.${format}.js`,
         },
-        cssTarget: 'chrome61',
         rollupOptions: {
             external: ['react', 'react-dom'],
             output: {
@@ -35,3 +45,5 @@ export default defineConfig({
         },
     },
 });
+
+
