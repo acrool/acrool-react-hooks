@@ -1,8 +1,11 @@
 import {useCallback, useEffect, useRef, useState} from 'react';
 
 
-const useTextAreaFocus = () => {
-    const textFieldRef = useRef<HTMLTextAreaElement>();
+/**
+ * 處理 Textarea 控制
+ */
+const useTextArea = () => {
+    const textFieldRef = useRef<HTMLTextAreaElement>(null);
     const [isFocus, setFocus] = useState<boolean>(false);
 
     const handleOnFocus = useCallback(() => setFocus(true), []);
@@ -50,4 +53,4 @@ const useTextAreaFocus = () => {
     };
 };
 
-export default useTextAreaFocus;
+export default useTextArea;

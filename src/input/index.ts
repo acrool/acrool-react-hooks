@@ -1,1 +1,1 @@
-export {default as useTextFieldFocus} from './useTextAreaFocus';
+export {default as useTextArea} from './useTextArea';
