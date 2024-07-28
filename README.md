@@ -39,10 +39,10 @@ yarn add @acrool/react-hooks
 These are examples of imports for various types. Refer to the documentation inside each library for other methods.
 
 ```tsx
-import {useTextFieldFocus} from '@acrool/react-hooks';
-import {useClickOutSite} from '@acrool/react-hooks';
-import {useCountDownTimer} from '@acrool/react-hooks';
-import {useCountUpTimer} from '@acrool/react-hooks';
+import {useTextFieldFocus} from '@acrool/react-hooks/input';
+import {useClickOutSite} from '@acrool/react-hooks/position';
+import {useCountDownTimer} from '@acrool/react-hooks/time';
+import {useCountUpTimer} from '@acrool/react-hooks/time';
 
 ```
 
