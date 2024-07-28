@@ -1,0 +1,8 @@
+{
+  "name": "@acrool/react-hooks/input",
+  "description": "Acrool React Hooks for Input manipulation",
+  "private": true,
+  "main": "./index.cjs.js",
+  "module": "./index.es.js",
+  "types": "./index.d.ts"
+}

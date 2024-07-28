@@ -1,0 +1,25 @@
+{
+  "name": "@acrool/react-hooks",
+  "version": "0.0.5-alpha.5",
+  "description": "Common javascript utils methods for project development",
+  "keywords": [
+    "acrool",
+    "react",
+    "typescript",
+    "hooks",
+    "portal"
+  ],
+  "private": false,
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/acrool/acrool-react-hooks.git"
+  },
+  "engines": {
+    "node": ">=14"
+  },
+  "peerDependencies": {
+    "react": "^18.x",
+    "react-dom": "^18.x"
+  }
+}

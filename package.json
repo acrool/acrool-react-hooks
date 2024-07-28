@@ -1,50 +1,31 @@
 {
   "name": "@acrool/react-hooks",
-  "version": "0.0.5-alpha.2",
-  "description": "Hooks library based for Reactjs",
-  "keywords": [
-    "acrool",
-    "react",
-    "typescript",
-    "hooks",
-    "portal"
-  ],
-  "private": false,
   "type": "module",
   "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/acrool/acrool-react-hooks.git"
   },
-  "module": "./dist/acrool-react-hooks.es.js",
-  "types": "./dist/index.d.ts",
-  "exports": {
-    ".": {
-      "browser": "./dist/acrool-react-hooks.es.js",
-      "import": "./dist/acrool-react-hooks.es.js"
-    }
-  },
-  "files": [
-    "dist"
-  ],
   "engines": {
     "node": ">=14"
   },
   "scripts": {
     "dev": "NODE_ENV=development vite build -w",
     "build:claer": "rm -rf ./dist",
+    "build:post": "ts-node ./build-post-processors.js",
     "prepublishOnly": "run-s build",
-    "build": "run-s build:claer && tsc && vite build",
-    "preview": "vite preview",
+    "build": "run-s build:claer && tsc && vite build && run-s build:post",
     "lint:fix": "eslint ./src --fix",
     "cz": "git-cz",
     "test": "jest",
     "gitlog": "git log --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cblueby %an %Cgreen(%cr)%Creset'",
-    "release": "standard-version --release-as",
-    "release:major": "standard-version -r major",
-    "release:minor": "standard-version -r minor",
-    "release:patch": "standard-version -r patch",
-    "release:alpha": "standard-version --prerelease alpha"
+    "release-cli": "standard-version --packageFiles ./src/package.json --bumpFiles ./src/package.json",
+    "release": "yarn release-cli --release-as",
+    "release:major": "yarn release-cli -r major && run-s postrelease",
+    "release:minor": "yarn release-cli -r minor && run-s postrelease",
+    "release:patch": "yarn release-cli -r patch && run-s postrelease",
+    "release:alpha": "yarn release-cli --prerelease alpha && run-s postrelease",
+    "postrelease": "# then run `git push --follow-tags origin main && yarn build && npm publish ./dist --access=public` to publish"
   },
   "peerDependencies": {
     "react": "^18.x",
@@ -58,7 +39,6 @@
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
     "@vitejs/plugin-react-swc": "^3.0.0",
-    "clsx": "^2.x",
     "cz-git": "^1.6.1",
     "eslint": "^8.37.0",
     "eslint-config-react-app": "^7.0.1",
@@ -72,8 +52,8 @@
     "sass": "^1.77.1",
     "standard-version": "^9.5.0",
     "ts-jest": "^29.2.3",
+    "ts-node": "10.9.2",
     "typescript": "^4.9.3",
-    "ulid": "^2.3.0",
     "vite": "^4.2.0",
     "vite-plugin-dts": "^2.1.0",
     "vite-plugin-eslint": "^1.8.1"
