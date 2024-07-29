@@ -7,16 +7,16 @@
 
 ## Features
 
-### useTextArea
+### useTextarea
 
 Control textarea state
 
 ```tsx
-import {useTextAreaFocus} from '@acrook/react-hooks';
+import {useTextArea} from '@acrook/react-hooks';
 import {useEffect} from "react";
 
 const Example = () => {
-    const {textFieldRef, focus, isFocus} = useTextArea();
+    const {inputRef, focus, isFocus} = useTextArea();
 
     useEffect(() => {
         focus(1);
@@ -24,7 +24,7 @@ const Example = () => {
     
     return <>
         <TextArea
-            ref={textFieldRef}
+            ref={inputRef}
         />
         isFocus: {String(isFocus)}
     </>;
