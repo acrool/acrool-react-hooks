@@ -3,12 +3,12 @@ import {useCallback, useEffect, useRef, useState} from 'react';
 
 const updateTimeMs = 1000;
 
-const millisecondToSec = (millisecond: number) => millisecond / 1000;
+const millisecondToSec = (millisecond: number) => Math.floor(millisecond / 1000);
 
 type TStart = (millisecond: number) => Promise<void>
 
 /**
- * 倒數計時器 傳入需倒數的秒數 可重複倒數
+ * 倒數計時器 傳入需倒數的毫數 可重複倒數
  */
 const useCountDownTimer = () => {
     const [totalSeconds, setTotalSeconds] = useState(0);
