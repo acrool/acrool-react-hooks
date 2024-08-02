@@ -1,4 +1,4 @@
-import {useCallback, useEffect, useId,useRef, useState} from 'react';
+import {useCallback, useRef, useState} from 'react';
 
 
 
@@ -14,8 +14,6 @@ const useClickOutSite = <T extends HTMLElement>() => {
     // 顯示控制
     const [isVisible, setIsVisible] = useState(false);
 
-
-
     /**
      * 處理點擊遮罩後的動作
      */
@@ -29,18 +27,24 @@ const useClickOutSite = <T extends HTMLElement>() => {
     /**
      * 處理控制顯示隱藏
      */
-    const controlVisible = useCallback((isVisible = false) => {
-        setIsVisible(isVisible);
+    const controlVisible = useCallback((newIsVisible?: boolean) => {
 
-        setTimeout(() => {
-            if(isVisible){
-                document.addEventListener('click', handleClickOutSite);
-            }else{
-                document.removeEventListener('click', handleClickOutSite);
+
+        setIsVisible(curr => {
+            if(typeof newIsVisible === 'undefined'){
+                if(!curr){
+                    mainElRef.current?.focus();
+                }
+
+                return !curr;
             }
-        }, 0);
-    }, [handleClickOutSite]);
 
+            if(newIsVisible){
+                mainElRef.current?.focus();
+            }
+            return newIsVisible;
+        });
+    }, [handleClickOutSite]);
 
 
     return {
