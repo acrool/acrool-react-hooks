@@ -46,9 +46,17 @@ const useTextArea = () => {
         inputRef.current.setSelectionRange(end,end);
     };
 
+    const blur = () => {
+        if(!inputRef.current) {
+            return;
+        }
+        inputRef.current.blur();
+    };
+
     return {
         inputRef,
         focus,
+        blur,
         isFocus,
     };
 };
