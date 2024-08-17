@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.9-alpha.0](https://github.com/acrool/acrool-react-hooks/compare/v0.0.8...v0.0.9-alpha.0) (2024-08-17)
+
 ### [0.0.8](https://github.com/acrool/acrool-react-hooks/compare/v0.0.8-alpha.1...v0.0.8) (2024-08-07)
 
 ### [0.0.8-alpha.1](https://github.com/acrool/acrool-react-hooks/compare/v0.0.8-alpha.0...v0.0.8-alpha.1) (2024-08-02)
