@@ -6,8 +6,8 @@ import {useState} from 'react';
 /**
  * 顯示隱藏切換 Hook
  */
-const useShow = () => {
-    const [isShow, setIsOpen] = useState<boolean>(false);
+const useShow = (defaultIsShow = false) => {
+    const [isShow, setIsOpen] = useState<boolean>(defaultIsShow);
 
     const hide = () => setIsOpen(false);
     const show = () => setIsOpen(true);
