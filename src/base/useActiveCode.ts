@@ -23,7 +23,7 @@ const useActiveCode = <T>(defaultActiveCode) => {
      */
     const checkIsActive = useCallback((code: T) => {
         return activeCode === code;
-    }, []);
+    }, [activeCode]);
 
     return {
         activeCode,
