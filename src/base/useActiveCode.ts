@@ -6,7 +6,7 @@ import {useCallback, useState} from 'react';
 /**
  * 選定狀態切換
  */
-const useActiveCode = <T>(defaultActiveCode) => {
+const useActiveCode = <T>(defaultActiveCode: T) => {
     const [activeCode, setActiveCode] = useState<T>(defaultActiveCode);
 
     /**
