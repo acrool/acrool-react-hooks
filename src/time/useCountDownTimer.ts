@@ -8,7 +8,9 @@ const millisecondToSec = (millisecond: number) => Math.floor(millisecond / 1000)
 type TStart = (millisecond: number) => Promise<void>
 
 /**
- * 倒數計時器 傳入需倒數的毫數 可重複倒數
+ * 倒數計時器 傳入需倒數的'毫秒'數
+ * - 可重複倒數
+ * - 回傳為'秒數'
  */
 const useCountDownTimer = () => {
     const [totalSeconds, setTotalSeconds] = useState(0);
