@@ -23,7 +23,7 @@ describe('useCountDownTimer 倒數計時器', () => {
             jest.advanceTimersByTime(targetSec); //等待10秒
         });
 
-        expect(result.current.totalMillisecond).toEqual(0);
+        expect(result.current.totalSeconds).toEqual(0);
         expect(callback).toBeCalledTimes(1);
     });
 
@@ -43,7 +43,7 @@ describe('useCountDownTimer 倒數計時器', () => {
             jest.advanceTimersByTime(targetSec); //等待5秒
         });
 
-        expect(result.current.totalMillisecond).toEqual(0);
+        expect(result.current.totalSeconds).toEqual(0);
         expect(callback).toBeCalledTimes(0);
     });
 
@@ -57,7 +57,7 @@ describe('useCountDownTimer 倒數計時器', () => {
             jest.advanceTimersByTime(targetSec); //等待5秒
         });
 
-        expect(result.current.totalMillisecond).toEqual(5);
+        expect(result.current.totalSeconds).toEqual(5);
         unmount();
 
         act(() => {
@@ -65,7 +65,7 @@ describe('useCountDownTimer 倒數計時器', () => {
         });
 
         // 沒有計時器 所以仍然是5
-        expect(result.current.totalMillisecond).toEqual(5);
+        expect(result.current.totalSeconds).toEqual(5);
     });
 });
 

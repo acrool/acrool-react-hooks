@@ -8,10 +8,10 @@ const millisecondToSec = (millisecond: number) => Math.floor(millisecond / 1000)
 type TStart = (millisecond: number) => Promise<void>
 
 /**
- * 倒數計時器 傳入需倒數的毫秒 可重複倒數
+ * 倒數計時器 傳入需倒數的毫數 可重複倒數
  */
 const useCountDownTimer = () => {
-    const [totalMillisecond, setTotalMilliseconds] = useState(0);
+    const [totalSeconds, setTotalSeconds] = useState(0);
     const timerRef = useRef<ReturnType<typeof setInterval>>();
 
     useEffect(()=> {
@@ -30,10 +30,10 @@ const useCountDownTimer = () => {
                 return;
             }
 
-            setTotalMilliseconds(millisecondToSec(millisecond));
+            setTotalSeconds(millisecondToSec(millisecond));
 
             timerRef.current = setInterval(() => {
-                setTotalMilliseconds((sec) => {
+                setTotalSeconds((sec) => {
                     const formatSec = sec - 1;
                     if (formatSec <= 0) {
                         resolve();
@@ -52,7 +52,7 @@ const useCountDownTimer = () => {
 
     return {
         start,
-        totalMillisecond,
+        totalSeconds,
     };
 };
 
