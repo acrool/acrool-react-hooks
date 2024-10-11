@@ -12,7 +12,7 @@
 Control textarea state
 
 ```tsx
-import useLazyLoadBackground, {EImageLoadStatus} from '@acrool/react-hooks/lazy';
+import {useLazyLoadBackground, EImageLoadStatus} from '@acrool/react-hooks/lazy';
 
 const Img = () => {
     const {imageRef} = useLazyLoadBackground({enabled: isLazy, imageUrl: src});

@@ -1,1 +1,2 @@
-export {default as usePosition} from './useLazyLoadBackground';
+export {default as useLazyLoadBackground} from './useLazyLoadBackground';
+export * from './useLazyLoadBackground';
