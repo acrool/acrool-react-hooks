@@ -6,9 +6,9 @@ interface IUseLazyLoadProps {
 }
 
 export enum EImageLoadStatus {
-    loading,
-    done,
-    fail,
+    loading = 'loading',
+    done = 'done',
+    fail = 'fail',
 }
 
 /**
