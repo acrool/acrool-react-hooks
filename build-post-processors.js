@@ -1,7 +1,7 @@
 import {spawnSync} from 'child_process';
 
 
-const modules = ['base','input','position','time'];
+const modules = ['base','input','position','time', 'lazy'];
 
 new Promise(async () => {
     const formIndexPackage = './src/package.json';

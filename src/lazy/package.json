@@ -1,0 +1,8 @@
+{
+  "name": "@acrool/react-hooks/lazy",
+  "description": "Acrool React Hooks for Lazy",
+  "private": true,
+  "main": "./index.cjs.js",
+  "module": "./index.es.js",
+  "types": "./index.d.ts"
+}
