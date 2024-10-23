@@ -67,5 +67,27 @@ describe('useCountDownTimer 倒數計時器', () => {
         // 沒有計時器 所以仍然是5
         expect(result.current.totalSeconds).toEqual(5);
     });
+
+    it('測試五秒後再次呼叫計時器剩餘秒數是否正常',  () => {
+        const {result} = renderHook(() => useCountDownTimer());
+
+        const targetSec = 10 * 1000;
+
+        act(() => {
+            result.current.start(targetSec); // 開始倒數10秒
+            jest.advanceTimersByTime(5 * 1000); // 等待5秒
+        });
+
+        // 確認此時剩餘秒數為5秒
+        expect(result.current.totalSeconds).toBe(5);
+
+        act(() => {
+            result.current.start(targetSec); // 再次啟動倒數10秒
+            jest.advanceTimersByTime(2 * 1000); // 等待2秒
+        });
+
+        // 確認此時剩餘秒數為8秒
+        expect(result.current.totalSeconds).toBe(8);
+    });
 });
 
