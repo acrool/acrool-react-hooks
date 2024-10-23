@@ -26,6 +26,11 @@ const useCountDownTimer = () => {
 
         return new Promise<void>((resolve) => {
 
+            // 清除上一個計時器
+            if (timerRef.current) {
+                clearInterval(timerRef.current);
+            }
+
             // 檢查秒數是否大於0
             if (millisecond <= 0) {
                 resolve();
