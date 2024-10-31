@@ -9,22 +9,28 @@
 
 ### useLazyLoadBackground
 
-Control textarea state
+div css background-url lazy hook
 
 ```tsx
 import {useLazyLoadBackground, EImageLoadStatus} from '@acrool/react-hooks/lazy';
 
 const Img = () => {
-    const {imageRef} = useLazyLoadBackground({enabled: isLazy, imageUrl: src});
+    const {imageRef, isPending, isFetching} = useLazyLoadBackground({enabled: isLazy, imageUrl: src});
 
+    const getImgBgImageCSSVar = () => {
+        if(src && !isLazy){
+            return `url("${src}")`;
+        }
+        return undefined;
+    };
+    
     return <ImgRoot
         ref={imageRef}
         style={{
             ...style,
-            '--img-bg-url': src && !isLazy ? `url("${src}")`: undefined,
+            '--img-bg-url': getImgBgImageCSSVar(),
         }}
-        width={isFluid ? '100%':width}
-        isLazy={isLazy}
+        data-lazy={isLazy ? '':undefined}
     >
         {children}
     </ImgRoot>;
@@ -82,6 +88,39 @@ const ImgRoot = styled.div<{
 
 
 
+```
+
+
+
+
+### useLazyLoadImage
+
+img lazy hook
+
+```tsx
+import {useLazyLoadBackground, EImageLoadStatus} from '@acrool/react-hooks/lazy';
+
+const Img = () => {
+    const {imageRef, isPending, isFetching} = useLazyLoadImage({
+        enabled: slide.isLazy ?? false,
+        imageUrl
+    });
+
+    const getImgBgImageCSSVar = () => {
+        if(src && !isLazy){
+            return `url("${src}")`;
+        }
+        return undefined;
+    };
+    
+    return <img
+        ref={imageRef}
+        src={(!slide.isLazy && imageUrl) ? imageUrl :undefined}
+        data-lazy-src={slide.isLazy && isPending ? imageUrl: undefined}
+    >
+        {children}
+    </img>;
+}
 ```
 
 
