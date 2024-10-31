@@ -3,7 +3,7 @@ import {useCallback, useEffect, useRef, useState, useTransition} from 'react';
 interface IUseLazyLoadProps {
     enabled?: boolean
     imageUrl?: string
-    imageCSSVar?: string
+    onError?: () => void
 }
 
 
@@ -19,7 +19,7 @@ interface IUseLazyLoadProps {
 const useLazyLoadBackground = ({
     enabled,
     imageUrl,
-    imageCSSVar = '--img-bg-url',
+    onError,
 }: IUseLazyLoadProps) => {
     const imageRef = useRef<HTMLDivElement>(null);
     const watcher = useRef<IntersectionObserver>();
@@ -39,17 +39,11 @@ const useLazyLoadBackground = ({
     }, [imageUrl, enabled]);
 
 
-    const generatorSetFetchingFn = (el: HTMLDivElement) => {
-        return (_isFetching: boolean) => {
-            startTransition(() => {
-                if(_isFetching){
-                    el.setAttribute('fetching', '');
-                }else{
-                    el.removeAttribute('fetching');
-                }
-                setFetching(_isFetching);
-            });
-        };
+
+    const handleSetFetching = (_isFetching: boolean) => {
+        startTransition(() => {
+            setFetching(_isFetching);
+        });
     };
 
 
@@ -58,29 +52,28 @@ const useLazyLoadBackground = ({
             if (entry.isIntersecting) {
                 const el = entry.target as HTMLDivElement;
                 observer.unobserve(el);
-
-                const setFetchingFn = generatorSetFetchingFn(el);
+                handleSetFetching(true);
 
                 if(imageUrl){
-                    setFetchingFn(true);
 
                     const img = new Image();
                     img.src = imageUrl;
                     img.onload = () => {
-                        el.style.setProperty(imageCSSVar, `url("${img.src}")`);
-                        setFetchingFn(false);
+                        handleSetFetching(false);
                     };
                     img.onerror = () => {
-                        setFetchingFn(false);
+                        handleSetFetching(false);
+                        if(onError) onError();
                     };
                 }
 
             }
         }
-    }, [imageUrl]);
+    }, [imageUrl, onError]);
 
     return {
         imageRef,
+        imageUrl,
         isPending,
         isFetching,
     };
