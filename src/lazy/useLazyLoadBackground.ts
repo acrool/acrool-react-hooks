@@ -23,8 +23,10 @@ const useLazyLoadBackground = ({
 }: IUseLazyLoadProps) => {
     const imageRef = useRef<HTMLDivElement>(null);
     const watcher = useRef<IntersectionObserver>();
-    const [isPending, startTransition] = useTransition();
+    const [, startTransition] = useTransition();
     const [isFetching, setFetching] = useState<boolean>(false);
+    const [isPending, setPending] = useState<boolean>(true);
+    const [_imageUrl, setImageUrl] = useState<string>();
 
     useEffect(() => {
         if(enabled && imageRef.current && imageUrl){
@@ -40,9 +42,25 @@ const useLazyLoadBackground = ({
 
 
 
-    const handleSetFetching = (_isFetching: boolean) => {
+    const handleOnFetching = () => {
         startTransition(() => {
-            setFetching(_isFetching);
+            setFetching(true);
+        });
+    };
+
+    const handleOnError = () => {
+        startTransition(() => {
+            setFetching(false);
+            setPending(false);
+            if(onError) onError();
+        });
+    };
+
+    const handleOnLoad = () => {
+        startTransition(() => {
+            setFetching(false);
+            setPending(false);
+            setImageUrl(imageUrl);
         });
     };
 
@@ -52,19 +70,13 @@ const useLazyLoadBackground = ({
             if (entry.isIntersecting) {
                 const el = entry.target as HTMLDivElement;
                 observer.unobserve(el);
-                handleSetFetching(true);
+                handleOnFetching();
 
                 if(imageUrl){
-
                     const img = new Image();
                     img.src = imageUrl;
-                    img.onload = () => {
-                        handleSetFetching(false);
-                    };
-                    img.onerror = () => {
-                        handleSetFetching(false);
-                        if(onError) onError();
-                    };
+                    img.onload = handleOnLoad;
+                    img.onerror = handleOnError;
                 }
 
             }
@@ -73,7 +85,7 @@ const useLazyLoadBackground = ({
 
     return {
         imageRef,
-        imageUrl,
+        _imageUrl,
         isPending,
         isFetching,
     };
