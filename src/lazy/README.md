@@ -21,7 +21,7 @@ const Img = () => {
         ref={imageRef}
         style={{
             ...style,
-            '--bg-image': src && !isLazy ? `url("${src}")`: undefined,
+            '--img-bg-url': src && !isLazy ? `url("${src}")`: undefined,
         }}
         width={isFluid ? '100%':width}
         isLazy={isLazy}
@@ -70,8 +70,7 @@ const ImgRoot = styled.div<{
             filter: blur(4px);
             transition: opacity .8s, filter .8s;
         }
-        &[data-status="${EImageLoadStatus.done}"],
-        &[data-status="${EImageLoadStatus.fail}"] {
+        &[data-fetching]{
             &:before{
                 opacity: 1;
                 filter: blur(0);

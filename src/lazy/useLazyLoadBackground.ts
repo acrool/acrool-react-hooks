@@ -1,15 +1,11 @@
-import {useCallback,useEffect, useRef, useState} from 'react';
+import {useCallback, useEffect, useRef, useState, useTransition} from 'react';
 
 interface IUseLazyLoadProps {
     enabled?: boolean
     imageUrl?: string
+    imageCSSVar?: string
 }
 
-export enum EImageLoadStatus {
-    loading = 'loading',
-    done = 'done',
-    fail = 'fail',
-}
 
 /**
  * 攬加載背景圖片
@@ -22,10 +18,13 @@ export enum EImageLoadStatus {
  */
 const useLazyLoadBackground = ({
     enabled,
-    imageUrl
+    imageUrl,
+    imageCSSVar = '--img-bg-url',
 }: IUseLazyLoadProps) => {
     const imageRef = useRef<HTMLDivElement>(null);
     const watcher = useRef<IntersectionObserver>();
+    const [isPending, startTransition] = useTransition();
+    const [isFetching, setFetching] = useState<boolean>(false);
 
     useEffect(() => {
         if(enabled && imageRef.current && imageUrl){
@@ -40,26 +39,35 @@ const useLazyLoadBackground = ({
     }, [imageUrl, enabled]);
 
 
+    const generatorSetFetchingFn = (el: HTMLDivElement) => {
+        return (_isFetching: boolean) => {
+            startTransition(() => {
+                el.dataset['fetching'] = _isFetching ? '': undefined;
+                setFetching(_isFetching);
+            });
+        };
+    };
+
+
     const onEnterView: IntersectionObserverCallback = useCallback((entries, observer) => {
         for (let entry of entries) {
             if (entry.isIntersecting) {
                 const el = entry.target as HTMLDivElement;
                 observer.unobserve(el);
 
-                el.dataset.status = String(EImageLoadStatus.loading);
+                const setFetchingFn = generatorSetFetchingFn(el);
 
                 if(imageUrl){
+                    setFetchingFn(true);
+
                     const img = new Image();
                     img.src = imageUrl;
                     img.onload = () => {
-                        el.style.setProperty('--bg-image', `url("${img.src}")`);
-
-                        setTimeout(() => {
-                            el.dataset.status = String(EImageLoadStatus.done);
-                        }, 300);
+                        el.style.setProperty(imageCSSVar, `url("${img.src}")`);
+                        setFetchingFn(false);
                     };
                     img.onerror = () => {
-                        el.dataset.status = String(EImageLoadStatus.fail);
+                        setFetchingFn(false);
                     };
                 }
 
@@ -69,6 +77,8 @@ const useLazyLoadBackground = ({
 
     return {
         imageRef,
+        isPending,
+        isFetching,
     };
 };
 
