@@ -42,7 +42,11 @@ const useLazyLoadBackground = ({
     const generatorSetFetchingFn = (el: HTMLDivElement) => {
         return (_isFetching: boolean) => {
             startTransition(() => {
-                el.dataset['fetching'] = _isFetching ? '': undefined;
+                if(_isFetching){
+                    el.setAttribute('fetching', '');
+                }else{
+                    el.removeAttribute('fetching');
+                }
                 setFetching(_isFetching);
             });
         };
