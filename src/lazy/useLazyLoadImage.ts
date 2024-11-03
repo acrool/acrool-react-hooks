@@ -3,7 +3,6 @@ import {useEffect, useState, useRef, useCallback, useTransition} from 'react';
 interface IUseLazyLoadProps {
     enabled?: boolean
     imageUrl: string
-    delayTime?: number
 }
 
 
@@ -18,8 +17,10 @@ const useLazyLoadImage = ({
 }: IUseLazyLoadProps) => {
     const imageRef = useRef<HTMLImageElement>(null);
     const watcher = useRef<IntersectionObserver>();
-    const [isPending, startTransition] = useTransition();
+    const [_, startTransition] = useTransition();
     const [isFetching, setFetching] = useState<boolean>(false);
+    const [isPending, setPending] = useState<boolean>(true);
+    const [isError, setError] = useState<boolean>(false);
 
     useEffect(() => {
         if(enabled && imageRef.current && imageUrl){
@@ -34,9 +35,25 @@ const useLazyLoadImage = ({
     }, [imageUrl, enabled]);
 
 
-    const handleSetFetching = (_isFetching: boolean) => {
+
+    const handleOnFetching = () => {
         startTransition(() => {
-            setFetching(_isFetching);
+            setFetching(true);
+        });
+    };
+
+    const handleOnError = () => {
+        startTransition(() => {
+            setFetching(false);
+            setPending(false);
+            setError(true);
+        });
+    };
+
+    const handleOnLoad = () => {
+        startTransition(() => {
+            setFetching(false);
+            setPending(false);
         });
     };
 
@@ -45,15 +62,11 @@ const useLazyLoadImage = ({
             if (entry.isIntersecting) {
                 const el = entry.target as HTMLImageElement;
                 observer.unobserve(el);
-                handleSetFetching(true);
+                handleOnFetching();
 
                 el.src = imageUrl;
-                el.onload = () => {
-                    handleSetFetching(false);
-                };
-                el.onerror = () => {
-                    handleSetFetching(false);
-                };
+                el.onload = handleOnLoad;
+                el.onerror = handleOnError;
             }
         }
     }, [imageUrl]);
@@ -62,6 +75,7 @@ const useLazyLoadImage = ({
         imageRef,
         isPending,
         isFetching,
+        isError,
     };
 };
 

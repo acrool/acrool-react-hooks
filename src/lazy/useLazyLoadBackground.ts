@@ -3,7 +3,6 @@ import {useCallback, useEffect, useRef, useState, useTransition} from 'react';
 interface IUseLazyLoadProps {
     enabled?: boolean
     imageUrl?: string
-    onError?: () => void
 }
 
 
@@ -19,13 +18,13 @@ interface IUseLazyLoadProps {
 const useLazyLoadBackground = ({
     enabled,
     imageUrl,
-    onError,
 }: IUseLazyLoadProps) => {
     const imageRef = useRef<HTMLDivElement>(null);
     const watcher = useRef<IntersectionObserver>();
     const [, startTransition] = useTransition();
     const [isFetching, setFetching] = useState<boolean>(false);
     const [isPending, setPending] = useState<boolean>(true);
+    const [isError, setError] = useState<boolean>(false);
     const [_imageUrl, setImageUrl] = useState<string>();
 
     useEffect(() => {
@@ -52,7 +51,7 @@ const useLazyLoadBackground = ({
         startTransition(() => {
             setFetching(false);
             setPending(false);
-            if(onError) onError();
+            setError(true);
         });
     };
 
@@ -81,13 +80,14 @@ const useLazyLoadBackground = ({
 
             }
         }
-    }, [imageUrl, onError]);
+    }, [imageUrl]);
 
     return {
         imageRef,
         _imageUrl,
         isPending,
         isFetching,
+        isError,
     };
 };
 
