@@ -6,8 +6,9 @@ import {throttle} from 'throttle-debounce';
  * 視窗尺寸異動測
  * @param cb
  * @param deps
+ * @param throttleMs
  */
-const useWindowResize = (cb: () => void, deps: any[]) => {
+const useOnWindowResize = (cb: () => void, deps: any[], throttleMs = 300) => {
 
     // default
     useEffect(cb, []);
@@ -21,8 +22,8 @@ const useWindowResize = (cb: () => void, deps: any[]) => {
         };
     }, deps);
 
-    const throttleFunc = throttle(300, cb);
+    const throttleFunc = throttle(throttleMs, cb);
 
 };
 
-export default useWindowResize;
+export default useOnWindowResize;

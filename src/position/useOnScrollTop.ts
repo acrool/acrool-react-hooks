@@ -9,7 +9,7 @@ import {useCallback, useEffect, useState} from 'react';
 /**
  * 偵測ScrollTop到頂
  */
-const useScrollTop = () => {
+const useOnScrollTop = () => {
     const [isScrollTop, setIsScrollTop] = useState(window.scrollY === 0);
 
     const handleCheckTopState = useCallback((ev: Event) => {
@@ -31,4 +31,4 @@ const useScrollTop = () => {
 
 };
 
-export default useScrollTop;
+export default useOnScrollTop;
