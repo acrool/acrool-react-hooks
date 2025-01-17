@@ -31,6 +31,9 @@
     "react": "^18.x",
     "react-dom": "^18.x"
   },
+  "dependencies": {
+    "throttle-debounce": "^5.0.2"
+  },
   "devDependencies": {
     "@swc/jest": "^0.2.27",
     "@testing-library/react": "^14.0.0",
