@@ -6,7 +6,7 @@ import {useCallback, useEffect, useRef, useState} from 'react';
  */
 const useCountUpTimer = () => {
     const [time, setTime] = useState<number>(0);
-    const timerRef = useRef<ReturnType<typeof setInterval>>();
+    const timerRef = useRef<ReturnType<typeof setInterval>>(null);
 
     const start = useCallback((startTime: string) => {
         if (startTime) {
@@ -24,7 +24,7 @@ const useCountUpTimer = () => {
     const stop = useCallback(() => {
         if (timerRef.current) {
             clearInterval(timerRef.current);
-            timerRef.current = undefined;
+            timerRef.current = null;
         }
     }, []);
 

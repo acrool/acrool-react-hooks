@@ -19,6 +19,8 @@
 
 </div>
 
+`^1.1.0 support react >=18.0.0 <20.0.0`
+
 
 ## Features
 

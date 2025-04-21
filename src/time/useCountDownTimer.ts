@@ -14,7 +14,7 @@ type TStart = (millisecond: number) => Promise<void>
  */
 const useCountDownTimer = () => {
     const [totalSeconds, setTotalSeconds] = useState(0);
-    const timerRef = useRef<ReturnType<typeof setInterval>>();
+    const timerRef = useRef<ReturnType<typeof setInterval>>(null);
 
     useEffect(()=> {
         return () => {
