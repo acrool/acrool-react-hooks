@@ -28,6 +28,7 @@
 - **[Input](/src/input)** - Related to input controls.
 - **[Position](/src/position)** - Related to position control.
 - **[Time](/src/time)** - Time-related (e.g. timer).
+- **[Hover](/src/hover)** - Related to hover control.
 
 
 ## Install

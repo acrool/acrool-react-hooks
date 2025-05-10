@@ -1,7 +1,7 @@
 # Acrool React Hooks / Hover
 
 <p>
-    Related to position control.
+    Related to hover control.
 </p>
 
 
