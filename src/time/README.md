@@ -48,8 +48,9 @@ Record how long the time is counting upwards, and conveniently display the clock
 
 ```tsx
 import {useCountUpTimer} from '@acrook/react-hooks';
+import {formatSecondToString} from '@acrool/jsutils/date';
 import {useEffect} from "react";
-import {formatSecondToString} from 'bear-jsutils/date';
+
 
 const Example = () => {
     const {start, time} = useCountUpTimer();
