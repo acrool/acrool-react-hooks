@@ -16,31 +16,32 @@ import CSS from 'csstype';
 import {useLazyLoadBackground} from '@acrool/react-hooks/lazy';
 
 const Img = () => {
-    const {imageRef,_imageUrl, isPending, isFetching} = useLazyLoadBackground({enabled: isLazy, imageUrl: src});
+    const {imageRef, isPending, isError} = useLazyLoadImage({enabled: isLazy, imageUrl: src});
 
-    const getImgBgImageCSSVar = () => {
+    /**
+     * 取得圖片 URL
+     */
+    const getImageUrl = () => {
         if(src){
             if(!isLazy){
-                return `url("${src}")`;
-            }
-            if(_imageUrl){
-                return `url("${_imageUrl}")`;
+                return src;
             }
         }
         return undefined;
     };
     
-    return <ImgRoot
-        ref={imageRef}
-        style={{
-            ...style,
-            '--img-bg-url': getImgBgImageCSSVar(),
-        } as CSS.Properties}
-        data-pending={isPending}
+    return <img
+        ref={imageRef as React.Ref<HTMLImageElement>}
+        src={getImageUrl()}
+        alt={alt}
+        className={clsx(styles.img, className)}
+        data-pending={isLazy ? isPending && !isError: undefined}
+        data-error={isError ? '': undefined}
+        data-lazy-src={isLazy && isPending ? src: undefined}
         data-lazy={isLazy ? '':undefined}
-    >
-        {children}
-    </ImgRoot>;
+        data-loader={isLazy && isLazyLoaderVisible && isPending ? '':undefined}
+        {...rest}
+    />;
 }
 ````
 

@@ -2,7 +2,7 @@ import {useCallback, useEffect, useRef, useState, useTransition} from 'react';
 
 interface IUseLazyLoadProps {
     enabled?: boolean
-    imageUrl: string
+    imageUrl?: string
 }
 
 
@@ -64,7 +64,7 @@ const useLazyLoadImage = ({
                 observer.unobserve(el);
                 handleOnFetching();
 
-                el.src = imageUrl;
+                el.src = imageUrl!;
                 el.onload = handleOnLoad;
                 el.onerror = handleOnError;
             }
